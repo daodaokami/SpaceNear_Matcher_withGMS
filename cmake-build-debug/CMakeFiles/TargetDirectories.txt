@@ -1,0 +1,6 @@
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/CMakeFiles/SpatialSubdivision.dir
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/src/CMakeFiles/edit_cache.dir
+/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/src/CMakeFiles/spsub_div.dir
