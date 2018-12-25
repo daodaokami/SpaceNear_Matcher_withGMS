@@ -27,6 +27,56 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="UnorderMap_KPS_Test">
+				<Option output="/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/UnorderMap_KPS_Test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/home/lut/Desktop/C++/SpatialSubdivision/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 UnorderMap_KPS_Test"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="UnorderMap_KPS_Test/fast">
+				<Option output="/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/UnorderMap_KPS_Test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/home/lut/Desktop/C++/SpatialSubdivision/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 UnorderMap_KPS_Test/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="/home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug"/>
 				<Option type="4"/>
@@ -141,11 +191,17 @@
 		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/main.cpp">
 			<Option target="SpatialSubdivision"/>
 		</Unit>
+		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/src/keypoints_map.cpp">
+			<Option target="spsub_div"/>
+		</Unit>
 		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/src/spacenear_matcher.cpp">
 			<Option target="spsub_div"/>
 		</Unit>
 		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/src/spatical_subdivision.cpp">
 			<Option target="spsub_div"/>
+		</Unit>
+		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/unm_kps_test.cpp">
+			<Option target="UnorderMap_KPS_Test"/>
 		</Unit>
 		<Unit filename="/home/lut/Desktop/C++/SpatialSubdivision/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

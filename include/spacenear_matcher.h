@@ -21,7 +21,17 @@ public:
         this->gridNet_2 = gridNet_2;
     }
 
+    void Set_KeyPoints_1(int index, std::vector<cv::KeyPoint>& kps_1);
+    void Set_KeyPoints_2(int index, std::vector<cv::KeyPoint>& kps_2);
+
+    void merge_kps_descs(std::vector<std::vector<cv::KeyPoint*>*> *ptr_v_ptr_vkps, std::vector<cv::Mat>& descs,
+                         std::vector<cv::KeyPoint>& kps, cv::Mat& cdescs);
+    void merge_kps_descs(std::vector<cv::KeyPoint*> *ptr_vkps, cv::Mat& descs, std::vector<cv::KeyPoint>& kps, cv::Mat& cdescs);
+
     void SpaceNearMatcher(int index, std::vector<cv::DMatch>& sub_matches);
-    void SpaceNearMatcher(std::vector<cv::DMatch>& all_matches);
+    void SpaceNearMatcher(std::vector<cv::KeyPoint>& keyps_1, std::vector<cv::KeyPoint>& keyps_2,std::vector<cv::DMatch>& all_matches);
+    void drawMatches(cv::Mat& img1, std::vector<cv::KeyPoint>& kps1,
+                     cv::Mat& img2, std::vector<cv::KeyPoint>& kps2,
+                     std::vector<cv::DMatch>& matches);
 };
 #endif //SPATIALSUBDIVISION_SPACENEAR_MATCHER_H

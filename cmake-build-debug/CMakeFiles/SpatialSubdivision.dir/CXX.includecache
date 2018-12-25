@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+../include/gms_matcher.h
+opencv2/opencv.hpp
+-
+vector
+-
+iostream
+-
+ctime
+-
+
+../include/spacenear_matcher.h
+spatical_subdivision.h
+../include/spatical_subdivision.h
+
 ../include/spatical_subdivision.h
 opencv2/core/core.hpp
 -
@@ -27,6 +41,12 @@ opencv/cv.hpp
 -
 spatical_subdivision.h
 -
+spacenear_matcher.h
+-
+chrono
+-
+gms_matcher.h
+/home/lut/Desktop/C++/SpatialSubdivision/gms_matcher.h
 
 /usr/local/include/opencv/cv.h
 opencv2/core/core_c.h
