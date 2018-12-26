@@ -7,10 +7,12 @@
 #include <spatical_subdivision.h>
 #include <spacenear_matcher.h>
 #include <chrono>
+#include <datas_map.h>
 #include "gms_matcher.h"
 
 using namespace std;
 
+//改进点,运动趋势来,进行删除
 void GmsMatch(Mat &img1, Mat &img2, vector<cv::KeyPoint>& kps1, vector<cv::KeyPoint>& kps2,
               vector<cv::DMatch>& all_matches);
 Mat DrawInlier(Mat &src1, Mat &src2, vector<KeyPoint> &kpt1, vector<KeyPoint> &kpt2, vector<DMatch> &inlier, int type);
@@ -47,7 +49,7 @@ int main(int argc, char* argv[]) {
     cout<<"matches all is "<<matches_all.size()<<endl;
     cout<<img_1.size()<<endl;
 
-    Spatical_Subdivision sp_subdiv(img_1.size(), 80);
+    Spatical_Subdivision sp_subdiv(img_1.size(), 120); 
     //一项一项的测试
     /**
      * 特征点所在区域划分
@@ -153,7 +155,7 @@ int main(int argc, char* argv[]) {
     //接下来测试邻域功能
     //首先测试19的邻域,这个邻域比较好,特征点也比较多
 
-    int index = 41;//18,37,41
+    int index = 17;//18,37,41
     vector<cv::KeyPoint *> sub_ptrkps = gridNet.gridKeypoints[index];
     vector<cv::KeyPoint> subkps(sub_ptrkps.size());
     //在什么地方重复的添加了特征点?
@@ -235,13 +237,43 @@ int main(int argc, char* argv[]) {
     cv::waitKey(0);
     cv::destroyAllWindows();
     //对keypoints_2 进行操作,删掉重复的点,并把相应的位置信息,重新给all_matches赋值
-    for(int i=0; i<keyps_2.size(); i++){
-        //删除重复点,并且
-        //因为原来就有kps_2是不重复的点的集合,只需要把keyps_2的点映射上去,得到一个对应的索引号码
+    /*
+     *
+     * ----------------     筛选点     -----------------
+     *
+     **/
 
-        //要从后面获取
+    int preSize = kps_2.size();
+    KeyPoints_Map kps_map(preSize);
+    /*注意这两个功能必须得是同时使用的,一定对相同的数据进行操作*/
+    kps_map.CreateUnorder_Map_KpIndex_vecIndex_IndexKP(kps_2);
+    kps_map.CreateUnorder_Map_OuterIndex_InnerIndex(keyps_2);
+    map<int, int>* indexMap = kps_map.GetIndexMap();
+    for(int vm_index=0; vm_index<all_matches.size(); vm_index++){
+        int outer_index = all_matches[vm_index].trainIdx;
+        if(indexMap->find(outer_index) == indexMap->end()){
+            cerr<<"some points can not find!"<<endl;
+        }
+        else{
+            all_matches[vm_index].trainIdx = (*indexMap)[outer_index];
+        }
     }
-    //runImagePair(img_1, img_2, keyps_1, keyps_2, all_matches);
+    /*
+     *
+     * !!!!!!!!!!!!!                   !!!!!!!!!!!!!!!
+     *
+     * */
+    cout<<"###############################"<<endl;
+
+    for(int i=0; i<all_matches.size(); i++){
+        cout<<all_matches[i].trainIdx<<"     "<<all_matches[i].queryIdx<<endl;
+    }
+    cout<<keyps_1.size()<<endl;
+    cv::Mat image;
+    cv::drawMatches(img_1, keyps_1, img_2, kps_2, all_matches, image);
+    cv::imshow("show", image);
+    cv::waitKey(0);
+    runImagePair(img_1, img_2, keyps_1, kps_2, all_matches);
     return 0;
 }
 
@@ -284,20 +316,39 @@ void GmsMatch(Mat &img1, Mat &img2, vector<cv::KeyPoint>& kp1, vector<cv::KeyPoi
     imshow("show", show);
     waitKey();
 }
-
+void ShowRotationMatchesImage(cv::Mat& img_1, vector<cv::KeyPoint>& kps_1,
+                              cv::Mat& img_2, vector<cv::KeyPoint>& kps_2,
+                              vector<cv::DMatch>& matches);
 Mat DrawInlier(Mat &src1, Mat &src2, vector<KeyPoint> &kpt1, vector<KeyPoint> &kpt2, vector<DMatch> &inlier, int type) {
     const int height = max(src1.rows, src2.rows);
     const int width = src1.cols + src2.cols;
-    Mat output(height, width, CV_8UC1, Scalar(0, 0, 0));
-    src1.copyTo(output(Rect(0, 0, src1.cols, src1.rows)));
-    src2.copyTo(output(Rect(src1.cols, 0, src2.cols, src2.rows)));
+    Mat output(height, width, CV_8UC3, Scalar(0, 0, 0));
+
+    Mat three_channel_1 = Mat::zeros(src1.rows, src1.cols, CV_8UC3);
+    vector<Mat> channels_1;
+    for (int i=0;i<3;i++)
+    {
+        channels_1.push_back(src1);
+    }
+    merge(channels_1,three_channel_1);
+
+    Mat three_channel_2 = Mat::zeros(src2.rows, src2.cols, CV_8UC3);
+    vector<Mat> channels_2;
+    for (int i=0;i<3;i++)
+    {
+        channels_2.push_back(src2);
+    }
+    merge(channels_2,three_channel_2);
+
+    three_channel_1.copyTo(output(Rect(0, 0, three_channel_1.cols, three_channel_1.rows)));
+    three_channel_2.copyTo(output(Rect(three_channel_1.cols, 0, three_channel_2.cols, three_channel_2.rows)));
 
     if (type == 1)
     {
         for (size_t i = 0; i < inlier.size(); i++)
         {
             Point2f left = kpt1[inlier[i].queryIdx].pt;
-            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)src1.cols, 0.f));
+            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)three_channel_1.cols, 0.f));
             line(output, left, right, Scalar(0, 255, 255));
         }
     }
@@ -306,18 +357,47 @@ Mat DrawInlier(Mat &src1, Mat &src2, vector<KeyPoint> &kpt1, vector<KeyPoint> &k
         for (size_t i = 0; i < inlier.size(); i++)
         {
             Point2f left = kpt1[inlier[i].queryIdx].pt;
-            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)src1.cols, 0.f));
+            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)three_channel_1.cols, 0.f));
             line(output, left, right, Scalar(255, 0, 0));
         }
 
         for (size_t i = 0; i < inlier.size(); i++)
         {
             Point2f left = kpt1[inlier[i].queryIdx].pt;
-            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)src1.cols, 0.f));
+            Point2f right = (kpt2[inlier[i].trainIdx].pt + Point2f((float)three_channel_1.cols, 0.f));
             circle(output, left, 1, Scalar(0, 255, 255), 2);
             circle(output, right, 1, Scalar(0, 255, 0), 2);
         }
     }
-
+    ShowRotationMatchesImage(src1, kpt1, src2, kpt2, inlier);
     return output;
+}
+
+
+void ShowRotationMatchesImage(cv::Mat& img_1, vector<cv::KeyPoint>& kps_1,
+                              cv::Mat& img_2, vector<cv::KeyPoint>& kps_2,
+                              vector<cv::DMatch>& matches){
+    //将img逆时针旋转90°,特征点的x,y交换位置
+    cv::Mat r90_img_1, r90_img_2;
+    transpose(img_1, r90_img_1);
+    transpose(img_2, r90_img_2);
+
+    vector<cv::KeyPoint> transpose_kps_1, transpose_kps_2;
+    transpose_kps_1.resize(kps_1.size());
+    transpose_kps_2.resize(kps_2.size());
+    for(int i=0; i<kps_1.size(); i++){
+        transpose_kps_1[i].pt.x = kps_1[i].pt.y;
+        transpose_kps_1[i].pt.y = kps_1[i].pt.x;
+    }
+
+    for(int i=0; i<kps_2.size(); i++){
+        transpose_kps_2[i].pt.x = kps_2[i].pt.y;
+        transpose_kps_2[i].pt.y = kps_2[i].pt.x;
+    }
+    cv::Mat out;
+    cv::drawMatches(r90_img_1, transpose_kps_1, r90_img_2, transpose_kps_2, matches, out);
+    transpose(out, out);
+    cv::imshow("out", out);
+    cv::waitKey(0);
+
 }

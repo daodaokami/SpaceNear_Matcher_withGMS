@@ -45,19 +45,31 @@ void SpaceNear_Matcher::SpaceNearMatcher(std::vector<cv::KeyPoint>& keyps_1, std
         merge_kps_descs(&v_ptr_vkps_2, v_descs_2, kps_2, desc_2);
         keyps_1.insert(keyps_1.end(), kps_1.begin(), kps_1.end());
         keyps_2.insert(keyps_2.end(), kps_2.begin(), kps_2.end());
+        //一次插入一个块内的特征点
         descriptors_1.push_back(desc_1);
         descriptors_2.push_back(desc_2);
-        //std::cout<<"SpaceNearMatcher kps1 "<<kps_1.size()<<" desc_1 "<<desc_1.size<<std::endl;
-        //std::cout<<"SpaceNearMatcher kps2 "<<kps_2.size()<<" desc_2 "<<desc_2.size<<std::endl;
+        //这种时候是存在误匹配的
+        std::cout<<index<<" SpaceNearMatcher kps1 "<<kps_1.size()<<" desc_1 "<<desc_1.size<<std::endl;
+        std::cout<<index<<" SpaceNearMatcher kps2 "<<kps_2.size()<<" desc_2 "<<desc_2.size<<std::endl;
         //这里没有出错,应该是set keypoints 出错了
         std::vector<cv::DMatch> sub_matches;
+        sub_matches.clear();
         matcher.match(desc_1, desc_2, sub_matches);
         //在vector的matchespush中,需要注意的是,可能存在
         int start_posi_1 = keyps_1.size() - kps_1.size();
         int start_posi_2 = keyps_2.size() - kps_2.size();
+
         for(int i=0; i<sub_matches.size(); i++){
-            sub_matches[i].trainIdx += start_posi_1;
-            sub_matches[i].queryIdx += start_posi_2;
+            std::cout<<"cur_sub_matches "<<i<<"  "<<sub_matches[i].queryIdx<<"   -   "<<sub_matches[i].trainIdx<<std::endl;
+            sub_matches[i].queryIdx += start_posi_1;
+            sub_matches[i].trainIdx += start_posi_2;
+            //这里肯定是错的,要完成的任务如下
+            /**
+             * sub_matches[] 是当前训练的A-的索引和对应B-的索引的块内的索引号
+             *
+             *
+             * */
+
         }
         all_matches.insert(all_matches.end(), sub_matches.begin(), sub_matches.end());
     }
@@ -145,8 +157,8 @@ void SpaceNear_Matcher::Set_KeyPoints_2(int index, std::vector<cv::KeyPoint> &kp
 void SpaceNear_Matcher::drawMatches(cv::Mat &img1, std::vector<cv::KeyPoint> &kps1, cv::Mat &img2,
                                     std::vector<cv::KeyPoint> &kps2, std::vector<cv::DMatch> &matches) {
 
-    this->Set_KeyPoints_1(41, kps1);
-    this->Set_KeyPoints_2(41 , kps2);
+    this->Set_KeyPoints_1(17, kps1);
+    this->Set_KeyPoints_2(17, kps2);
     //采用多线程,四路同时计算
     cv::Mat img_kps1;
     cv::drawKeypoints(img1, kps1, img_kps1);

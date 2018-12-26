@@ -125,32 +125,32 @@ spsub_div/fast:
 	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/build
 .PHONY : spsub_div/fast
 
-keypoints_map.o: keypoints_map.cpp.o
+datas_map.o: datas_map.cpp.o
 
-.PHONY : keypoints_map.o
+.PHONY : datas_map.o
 
 # target to build an object file
-keypoints_map.cpp.o:
-	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/keypoints_map.cpp.o
-.PHONY : keypoints_map.cpp.o
+datas_map.cpp.o:
+	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/datas_map.cpp.o
+.PHONY : datas_map.cpp.o
 
-keypoints_map.i: keypoints_map.cpp.i
+datas_map.i: datas_map.cpp.i
 
-.PHONY : keypoints_map.i
+.PHONY : datas_map.i
 
 # target to preprocess a source file
-keypoints_map.cpp.i:
-	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/keypoints_map.cpp.i
-.PHONY : keypoints_map.cpp.i
+datas_map.cpp.i:
+	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/datas_map.cpp.i
+.PHONY : datas_map.cpp.i
 
-keypoints_map.s: keypoints_map.cpp.s
+datas_map.s: datas_map.cpp.s
 
-.PHONY : keypoints_map.s
+.PHONY : datas_map.s
 
 # target to generate assembly for a file
-keypoints_map.cpp.s:
-	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/keypoints_map.cpp.s
-.PHONY : keypoints_map.cpp.s
+datas_map.cpp.s:
+	cd /home/lut/Desktop/C++/SpatialSubdivision/cmake-build-debug && $(MAKE) -f src/CMakeFiles/spsub_div.dir/build.make src/CMakeFiles/spsub_div.dir/datas_map.cpp.s
+.PHONY : datas_map.cpp.s
 
 spacenear_matcher.o: spacenear_matcher.cpp.o
 
@@ -215,9 +215,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... spsub_div"
-	@echo "... keypoints_map.o"
-	@echo "... keypoints_map.i"
-	@echo "... keypoints_map.s"
+	@echo "... datas_map.o"
+	@echo "... datas_map.i"
+	@echo "... datas_map.s"
 	@echo "... spacenear_matcher.o"
 	@echo "... spacenear_matcher.i"
 	@echo "... spacenear_matcher.s"

@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+../include/datas_map.h
+unordered_map
+-
+map
+-
+vector
+-
+opencv2/core/types.hpp
+-
+
 ../include/gms_matcher.h
 opencv2/opencv.hpp
 -
@@ -44,6 +54,8 @@ spatical_subdivision.h
 spacenear_matcher.h
 -
 chrono
+-
+datas_map.h
 -
 gms_matcher.h
 /home/lut/Desktop/C++/SpatialSubdivision/gms_matcher.h

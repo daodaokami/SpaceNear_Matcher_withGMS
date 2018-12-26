@@ -6,10 +6,14 @@
 
 #IncludeRegexTransform: 
 
-../include/keypoints_map.h
+../include/datas_map.h
 unordered_map
 -
+map
+-
 vector
+-
+opencv2/core/types.hpp
 -
 
 ../include/spacenear_matcher.h
@@ -22,9 +26,11 @@ opencv2/core/core.hpp
 vector
 -
 
-/home/lut/Desktop/C++/SpatialSubdivision/src/keypoints_map.cpp
-keypoints_map.h
-/home/lut/Desktop/C++/SpatialSubdivision/src/keypoints_map.h
+/home/lut/Desktop/C++/SpatialSubdivision/src/datas_map.cpp
+iostream
+-
+datas_map.h
+/home/lut/Desktop/C++/SpatialSubdivision/src/datas_map.h
 
 /home/lut/Desktop/C++/SpatialSubdivision/src/spacenear_matcher.cpp
 spacenear_matcher.h

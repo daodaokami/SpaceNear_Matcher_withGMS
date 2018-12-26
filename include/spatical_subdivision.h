@@ -32,7 +32,7 @@ struct GridNet_No{
     typedef std::vector<v_ps> v_neighbor_v_ps;
     typedef std::vector<v_ps> v_index_v_ps;
     typedef std::vector<v_neighbor_v_ps*> v_index_ptr_v_neighbor_v_ps;
-    v_index_v_ps index_ps;              //每个网格的对应结构
+    v_index_v_ps index_ps;                  //每个网格的对应结构
     v_index_ptr_v_neighbor_v_ps neighbors;  //每个网格对应的v_index_v_ps
 };
 
@@ -67,6 +67,7 @@ public:
     std::vector<std::vector<int>> GetvIndexes(){
         return this->vIndexes;
     }
+
     void SplitPoints2Index(cv::Size img_sz, std::vector<cv::KeyPoint>& ps);//这里可能是points,也可能是keypoints
     int GetGridNofromKeypoints(cv::KeyPoint& kp);
     std::vector<int> GetNeighbors(int cur_index);
@@ -83,4 +84,5 @@ public:
                                     cv::Mat& descs, GridNet_No& gridNet_no);
     ~Spatical_Subdivision();
 };
+
 #endif //SPATIALSUBDIVISION_SPATICAL_SUBDIVISION_H
